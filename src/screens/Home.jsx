@@ -9,33 +9,35 @@ import { useApp } from '../context/AppContext.jsx';
 
 function WeekProgress({ week }) {
   const label = week <= 12 ? '임신 초기' : week <= 28 ? '임신 중기' : '임신 말기';
+  const pct = (week / 40) * 100;
   return (
     <Card padding={14} style={{ borderColor: T.cardMintDeep, marginBottom: 10 }}>
-      <div style={{
-        display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', marginBottom: 10,
-      }}>
-        <div style={{ fontSize: 13, fontWeight: 700, color: T.primaryInk }}>임신 주차</div>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 2 }}>
-          <span style={{ fontSize: 30, fontWeight: 700, color: T.primary, letterSpacing: -1 }}>{week}</span>
-          <span style={{ fontSize: 12, color: T.primaryInk, fontWeight: 600 }}>주차</span>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ fontSize: 12, fontWeight: 700, color: T.primaryInk, flexShrink: 0 }}>
+          임신 주차
         </div>
-      </div>
-      <div style={{ position: 'relative', height: 6, borderRadius: 999, background: T.primarySoft }}>
-        <div style={{
-          position: 'absolute', left: 0, top: 0, height: 6, borderRadius: 999,
-          background: T.primary, width: `${(week / 40) * 100}%`,
-        }} />
-        <div style={{
-          position: 'absolute', top: -7,
-          left: `calc(${(week / 40) * 100}% - 10px)`,
-          width: 20, height: 20, borderRadius: 999,
-          background: '#fff', border: `3px solid ${T.primary}`,
-        }} />
+        <div style={{ flex: 1, position: 'relative', height: 8, borderRadius: 999, background: T.primarySoft }}>
+          <div style={{
+            position: 'absolute', left: 0, top: 0, height: 8, borderRadius: 999,
+            background: T.primary, width: `${pct}%`,
+          }} />
+          <div style={{
+            position: 'absolute', top: '50%', transform: 'translateY(-50%)',
+            left: `calc(${pct}% - 9px)`,
+            width: 18, height: 18, borderRadius: 999,
+            background: '#fff', border: `3px solid ${T.primary}`,
+            boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
+          }} />
+        </div>
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 1, flexShrink: 0 }}>
+          <span style={{ fontSize: 22, fontWeight: 700, color: T.primary, letterSpacing: -0.5 }}>{week}</span>
+          <span style={{ fontSize: 11, color: T.primaryInk, fontWeight: 600 }}>주차</span>
+        </div>
       </div>
       <div style={{
         display: 'flex', justifyContent: 'space-between',
-        marginTop: 10, fontSize: 11, color: T.inkSoft,
+        marginTop: 7, fontSize: 10, color: T.inkSoft,
+        paddingLeft: 60,
       }}>
         <span>1주</span>
         <span style={{ color: T.primary, fontWeight: 700 }}>{label}</span>
@@ -160,7 +162,7 @@ export default function Home() {
             <div style={{
               width: 44, height: 44, borderRadius: 14,
               overflow: 'hidden', flexShrink: 0,
-              boxShadow: '0 4px 14px rgba(233,169,184,0.5)',
+              boxShadow: '0 4px 14px rgba(143,130,176,0.4)',
             }}>
               <img src="/images/logo.png" alt="해가될까"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -196,12 +198,9 @@ export default function Home() {
         </div>
 
         {/* Greeting */}
-        <h1 style={{ fontSize: 22, fontWeight: 700, color: T.ink, margin: '0 0 4px', letterSpacing: -0.5, lineHeight: 1.32 }}>
+        <h1 style={{ fontSize: 22, fontWeight: 700, color: T.ink, margin: '0 0 16px', letterSpacing: -0.5, lineHeight: 1.32 }}>
           {user.name}님, 오늘도<br />안전한 하루 되세요!
         </h1>
-        <p style={{ fontSize: 13, color: T.inkMid, margin: '0 0 16px' }}>
-          임신 <strong style={{ color: T.primary }}>{user.pregnancyWeek}주차</strong> · 등록 제품 {products.length}개
-        </p>
 
         {/* 임신 주차 */}
         {user.isPregnant && <WeekProgress week={user.pregnancyWeek} />}
@@ -233,7 +232,22 @@ export default function Home() {
         </div>
 
         {/* 등록 제품 목록 */}
-        <SectionTitle right={`${products.length}개`}>등록한 제품</SectionTitle>
+        <SectionTitle right={
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{ fontSize: 12, color: T.inkSoft }}>{products.length}개</span>
+            <button
+              onClick={() => navigate('productManage')}
+              style={{
+                fontSize: 12, fontWeight: 700, color: T.primaryDeep,
+                background: T.primarySoft, border: 'none',
+                padding: '4px 12px', borderRadius: 999,
+                cursor: 'pointer',
+              }}
+            >
+              관리하기
+            </button>
+          </div>
+        }>등록한 제품</SectionTitle>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 24 }}>
           {products.map(p => (
             <Card key={p.id} padding={14} onClick={() => navigate('analysisResult')} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -245,7 +259,7 @@ export default function Home() {
                 <Icon
                   name={p.category === 'med' ? 'pill' : p.category === 'food' ? 'apple' : 'bottle'}
                   size={20}
-                  color={p.category === 'med' ? T.primaryDeep : p.tone === 'red' ? T.redInk : p.tone === 'yellow' ? T.yellowInk : T.greenInk}
+                  color={p.category === 'med' ? T.medBlue : p.tone === 'red' ? T.redInk : p.tone === 'yellow' ? T.yellowInk : T.greenInk}
                 />
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -269,21 +283,6 @@ export default function Home() {
             이미 복용 중인 약과 <strong style={{ color: T.primary }}>함께 분석</strong>돼요.
           </p>
         </div>
-
-        <Card padding={12} soft style={{ marginBottom: 14 }}>
-          <div style={{ fontSize: 11, color: T.inkMid, fontWeight: 700, marginBottom: 10, letterSpacing: 0.1 }}>이미 등록된 복용 약</div>
-          <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-            {products.filter(p => p.category === 'med').map(p => (
-              <span key={p.id} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 5,
-                padding: '7px 11px', borderRadius: 999, background: '#fff',
-                fontSize: 12, fontWeight: 600, color: T.ink,
-              }}>
-                <Icon name="pill" size={12} color={T.primary} /> {p.name}
-              </span>
-            ))}
-          </div>
-        </Card>
 
         <div style={{ display: 'grid', gap: 10 }}>
           {REGISTER_METHODS.map(m => (

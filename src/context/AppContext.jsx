@@ -52,6 +52,10 @@ export function AppProvider({ children }) {
     setActiveTab('home');
   }, []);
 
+  const removeProduct = useCallback((id) => {
+    setProducts(prev => prev.filter(p => p.id !== id));
+  }, []);
+
   const addConversation = useCallback((conv) => {
     setConversations(prev => [conv, ...prev]);
   }, []);
@@ -61,7 +65,7 @@ export function AppProvider({ children }) {
       isOnboarded, user, products, conversations,
       screen, screenParams, activeTab,
       navigate, goBack, navigateTab,
-      completeOnboarding, addConversation,
+      completeOnboarding, removeProduct, addConversation,
     }}>
       {children}
     </AppContext.Provider>

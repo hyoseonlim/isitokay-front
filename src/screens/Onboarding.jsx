@@ -429,7 +429,7 @@ export default function Onboarding() {
           <div style={{
             width: 36, height: 36, borderRadius: 12,
             overflow: 'hidden', flexShrink: 0,
-            boxShadow: '0 3px 10px rgba(233,169,184,0.45)',
+            boxShadow: '0 3px 10px rgba(143,130,176,0.38)',
           }}>
             <img src="/images/logo.png" alt="해가될까"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }} />

@@ -1,42 +1,52 @@
 const T = {
+  // ── Surfaces ──────────────────────────────────────────────
   bgCanvas: '#FFFFFF',
-  bgApp: '#FBF4EE',
-  card: '#FFFFFF',
-  cardSoft: '#F7EFE7',
-  cardMint: '#DCEAF2',
-  cardMintDeep: '#B8D8E9',
-  border: '#E9DDD3',
-  borderStrong: '#D7C8B9',
-  divider: 'rgba(110,95,82,0.08)',
+  bgApp: '#EDE8F5',          // lavender page bg
+  card: '#FFFFFF',           // white card floating above bg
+  cardSoft: '#F5F2FC',       // very light lavender — soft card, input bg
+  cardMint: '#E5EEFA',       // light blue — medicine category bg
+  cardMintDeep: '#A8C4E8',   // medium blue — medicine borders
+  border: '#DDD8EE',         // lavender-tinted border
+  borderStrong: '#C6BEDF',
+  divider: 'rgba(60,50,100,0.08)',
 
-  ink: '#2E2B29',
-  inkMid: '#6C635E',
-  inkSoft: '#9B918A',
-  inkOnDark: '#F8F2EA',
+  // ── Text ──────────────────────────────────────────────────
+  ink: '#1A1828',            // near-black (purple tint)
+  inkMid: '#524E6A',
+  inkSoft: '#8E89A8',
+  inkOnDark: '#F5F3FC',
 
-  primary: '#E9A9B8',
-  primaryDeep: '#C17887',
-  primarySoft: '#F8D7E0',
-  primaryMid: '#EAB7C4',
-  primaryInk: '#7F3F55',
+  // ── Primary: deep indigo-purple — CTAs, active, user bubbles ──
+  primary: '#6355A4',
+  primaryDeep: '#4A3D8A',
+  primarySoft: '#ECEAF7',    // very light — chips, hover
+  primaryMid: '#8B80C0',     // mid — decorative, typing dots
+  primaryInk: '#4A3D8A',     // dark text on soft bg
 
-  cream: '#FAF1EB',
-  butter: '#F7D4DB',
+  cream: '#F8F6FC',
+  butter: '#ECEAF7',         // user chat bubble bg (same as primarySoft)
 
-  greenInk: '#3C7648',
-  greenBg: '#E9F3E7',
-  greenLine: '#C3D5C5',
-  greenSwatch: '#6B9B72',
+  // ── Medicine blue — pill icons, medical product markers ───
+  medBlue: '#4A7EC7',
+  medBlueSoft: '#E5EEFA',
 
-  yellowInk: '#7A5C00',
-  yellowBg: '#FFF8DC',
-  yellowLine: '#E8D080',
-  yellowSwatch: '#C9A000',
+  // ── Semantic: green (safe) ────────────────────────────────
+  greenInk: '#35593A',
+  greenBg: '#EAF3EB',
+  greenLine: '#B8D0BA',
+  greenSwatch: '#6A9B70',
 
-  redInk: '#8C504C',
-  redBg: '#F3D2D0',
-  redLine: '#E4B3B1',
-  redSwatch: '#B86B68',
+  // ── Semantic: yellow (caution) ───────────────────────────
+  yellowInk: '#635B08',
+  yellowBg: '#F7F4DA',
+  yellowLine: '#D8D6A0',
+  yellowSwatch: '#B8A818',
+
+  // ── Semantic: red (danger) ────────────────────────────────
+  redInk: '#7A3838',
+  redBg: '#F5EAEA',
+  redLine: '#DEB8B8',
+  redSwatch: '#B07070',
 
   radiusCard: 20,
   radiusLg: 28,

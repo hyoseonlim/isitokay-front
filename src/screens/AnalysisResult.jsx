@@ -113,15 +113,15 @@ export default function AnalysisResult() {
         </Card>
 
         {/* Verdict */}
-        <Card padding={0} style={{ overflow: 'hidden', borderColor: '#A9CDE2', marginBottom: 18, background: '#D9EBF7' }}>
+        <Card padding={0} style={{ overflow: 'hidden', borderColor: T.cardMintDeep, marginBottom: 18, background: T.primarySoft }}>
           <div style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{
               width: 24, height: 24, borderRadius: 999, background: '#fff',
               display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <Icon name="shieldCheck" size={13} color="#3C7FA2" strokeWidth={1.8} />
+              <Icon name="shieldCheck" size={13} color={T.primaryDeep} strokeWidth={1.8} />
             </div>
-            <span style={{ fontSize: 13, fontWeight: 700, color: '#3C7FA2', letterSpacing: 0.3 }}>
+            <span style={{ fontSize: 13, fontWeight: 700, color: T.primaryDeep, letterSpacing: 0.3 }}>
               현재 확인된 공식 데이터 기준 안전해요!
             </span>
           </div>

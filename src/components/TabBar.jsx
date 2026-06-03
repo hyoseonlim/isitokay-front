@@ -14,7 +14,7 @@ export default function TabBar({ active, onChange }) {
       flexShrink: 0,
       paddingTop: 6,
       paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 8px)',
-      background: 'rgba(251,244,238,0.97)',
+      background: 'rgba(255,255,255,0.97)',
       backdropFilter: 'blur(12px)',
       WebkitBackdropFilter: 'blur(12px)',
       borderTop: `1px solid ${T.border}`,

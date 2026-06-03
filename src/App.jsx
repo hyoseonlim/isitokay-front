@@ -13,6 +13,7 @@ import AnalysisResult from './screens/AnalysisResult.jsx';
 import RecallList from './screens/RecallList.jsx';
 import RecallDetail from './screens/RecallDetail.jsx';
 import Profile from './screens/Profile.jsx';
+import ProductManage from './screens/ProductManage.jsx';
 
 import { mockRecalls, MY_RECALL_ID } from './data/mockRecalls.js';
 
@@ -50,6 +51,7 @@ function Router() {
     recall: <RecallList />,
     recallDetail: <RecallDetail />,
     profile: <Profile />,
+    productManage: <ProductManage />,
   };
 
   return (
