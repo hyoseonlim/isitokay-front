@@ -1,5 +1,6 @@
 export const mockUser = {
   name: '박지수',
+  birthdate: '1994-07-29',
   age: 31,
   isPregnant: true,
   pregnancyWeek: 5,

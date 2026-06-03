@@ -23,9 +23,10 @@ export default function PushNotification({ recall, onDismiss, onClick }) {
   return (
     <div style={{
       position: 'absolute', top: 12, left: 12, right: 12, zIndex: 200,
-      transform: visible ? 'translateY(0)' : 'translateY(-120%)',
+      transform: visible ? 'translateY(0)' : 'translateY(-130%)',
       opacity: visible ? 1 : 0,
       transition: 'transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease',
+      pointerEvents: visible ? 'auto' : 'none',
     }}>
       <div
         onClick={handleClick}

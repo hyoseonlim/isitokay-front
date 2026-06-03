@@ -7,6 +7,16 @@ import { useApp } from '../context/AppContext.jsx';
 
 const TOTAL_STEPS = 5;
 
+function calcAge(birthdate) {
+  if (!birthdate) return null;
+  const today = new Date();
+  const birth = new Date(birthdate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
+}
+
 const ALLERGY_OPTIONS = [
   '페니실린', '아스피린', '설파제', '이부프로펜',
   '세팔로스포린', '아세트아미노펜', '모르핀', '코데인',
@@ -111,36 +121,48 @@ function Step1({ data, onChange }) {
   );
 }
 
-// Step 2 — 나이
+// Step 2 — 생년월일
 function Step2({ data, onChange }) {
+  const age = calcAge(data.birthdate);
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <div>
       <StepLabel>기본 정보</StepLabel>
       <h2 style={{ fontSize: 24, fontWeight: 700, color: T.ink, margin: '0 0 6px', letterSpacing: -0.5 }}>
-        나이를 알려주세요
+        생년월일을 알려주세요
       </h2>
       <p style={{ fontSize: 13, color: T.inkMid, margin: '0 0 28px', lineHeight: 1.55 }}>
         임신 위험도 분석에 활용돼요.
       </p>
       <label style={{ display: 'block', fontSize: 12, fontWeight: 700, color: T.inkMid, marginBottom: 8 }}>
-        만 나이
+        생년월일
       </label>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-        <input
-          type="number"
-          value={data.age}
-          onChange={e => onChange({ age: parseInt(e.target.value) || 0 })}
-          min={15} max={60}
-          style={{
-            width: 120, height: 54, borderRadius: 14,
-            border: `1.5px solid ${data.age ? T.primary : T.border}`,
-            background: '#fff', padding: '0 18px',
-            fontSize: 20, fontWeight: 700, color: T.ink,
-            fontFamily: 'inherit', outline: 'none', textAlign: 'center',
-          }}
-        />
-        <span style={{ fontSize: 16, color: T.inkMid, fontWeight: 600 }}>세</span>
-      </div>
+      <input
+        type="date"
+        value={data.birthdate}
+        onChange={e => onChange({ birthdate: e.target.value })}
+        max={today}
+        min="1960-01-01"
+        style={{
+          width: '100%', height: 54, borderRadius: 14,
+          border: `1.5px solid ${data.birthdate ? T.primary : T.border}`,
+          background: '#fff', padding: '0 18px',
+          fontSize: 16, color: T.ink, fontFamily: 'inherit',
+          outline: 'none',
+        }}
+      />
+      {age !== null && age >= 15 && (
+        <div style={{
+          marginTop: 14, padding: '14px 18px', borderRadius: 14,
+          background: T.primarySoft,
+          display: 'flex', alignItems: 'baseline', gap: 6,
+        }}>
+          <span style={{ fontSize: 13, color: T.primaryInk, fontWeight: 600 }}>만 나이</span>
+          <span style={{ fontSize: 26, fontWeight: 800, color: T.primaryDeep, letterSpacing: -1 }}>{age}</span>
+          <span style={{ fontSize: 14, color: T.primaryInk, fontWeight: 600 }}>세</span>
+        </div>
+      )}
     </div>
   );
 }
@@ -367,8 +389,8 @@ export default function Onboarding() {
   const { completeOnboarding } = useApp();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: '',
-    age: 30,
+    name: '박지수',
+    birthdate: '1994-07-29',
     isPregnant: true,
     pregnancyWeek: 5,
     pregnancyCount: 1,
@@ -382,27 +404,44 @@ export default function Onboarding() {
 
   const canNext = () => {
     if (step === 1) return formData.name.trim().length > 0;
-    if (step === 2) return formData.age >= 15 && formData.age <= 60;
+    if (step === 2) {
+      const age = calcAge(formData.birthdate);
+      return age !== null && age >= 15 && age <= 60;
+    }
     return true;
   };
 
   const handleNext = () => {
     if (step < TOTAL_STEPS) setStep(s => s + 1);
-    else completeOnboarding(formData);
+    else completeOnboarding({ ...formData, age: calcAge(formData.birthdate) });
   };
 
   const StepComp = STEPS[step - 1];
 
   return (
     <div style={{
-      position: 'absolute', inset: 0, background: T.bgApp,
+      flex: 1, minHeight: 0, background: T.bgApp,
       display: 'flex', flexDirection: 'column',
     }}>
       {/* Header */}
-      <div style={{ padding: '20px 24px 0', flexShrink: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
-          <img src="/images/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 999, objectFit: 'cover' }} />
-          <span style={{ fontSize: 15, fontWeight: 800, color: T.ink }}>해가 될까</span>
+      <div style={{ padding: '16px 24px 0', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 20 }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: 12,
+            overflow: 'hidden', flexShrink: 0,
+            boxShadow: '0 3px 10px rgba(233,169,184,0.45)',
+          }}>
+            <img src="/images/logo.png" alt="해가될까"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          </div>
+          <div>
+            <div style={{ fontSize: 16, fontWeight: 800, color: T.ink, letterSpacing: -0.5, lineHeight: 1.1 }}>
+              해가 될까
+            </div>
+            <div style={{ fontSize: 10, color: T.primaryDeep, fontWeight: 600, marginTop: 2, letterSpacing: 0.1 }}>
+              임산부 AI 안심 파트너
+            </div>
+          </div>
         </div>
         <ProgressBar step={step} />
       </div>
@@ -413,38 +452,46 @@ export default function Onboarding() {
       </div>
 
       {/* Footer */}
-      <div style={{ padding: '20px 24px 40px', flexShrink: 0 }}>
+      <div style={{
+        padding: '16px 24px',
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 20px)',
+        flexShrink: 0,
+      }}>
         <div style={{ display: 'flex', gap: 10 }}>
           {step > 1 && (
-            <CTAButton
-              variant="ghost"
-              full={false}
-              size="lg"
-              onClick={() => setStep(s => s - 1)}
-              style={{ flex: 1 }}
-            >
-              이전
-            </CTAButton>
+            <div style={{ flexShrink: 0 }}>
+              <CTAButton
+                variant="ghost"
+                full={false}
+                size="lg"
+                onClick={() => setStep(s => s - 1)}
+              >
+                이전
+              </CTAButton>
+            </div>
           )}
-          <CTAButton
-            onClick={handleNext}
-            disabled={!canNext()}
-            icon={step === TOTAL_STEPS
-              ? <Icon name="check" size={16} color="#fff" strokeWidth={2.5} />
-              : <Icon name="chevR" size={16} color="#fff" />}
-          >
-            {step === TOTAL_STEPS ? '시작하기' : step === 4 || step === 5 ? '없으면 건너뛰기' : '다음'}
-          </CTAButton>
+          <div style={{ flex: 1 }}>
+            <CTAButton
+              onClick={handleNext}
+              disabled={!canNext()}
+              icon={step === TOTAL_STEPS
+                ? <Icon name="check" size={16} color="#fff" strokeWidth={2.5} />
+                : <Icon name="chevR" size={16} color="#fff" />}
+            >
+              {step === TOTAL_STEPS ? '시작하기' : step === 4 || step === 5 ? '없으면 건너뛰기' : '다음'}
+            </CTAButton>
+          </div>
         </div>
         {(step === 4 || step === 5) && formData.allergies.length + formData.conditions.length > 0 && (
-          <CTAButton
-            variant="soft"
-            onClick={handleNext}
-            style={{ marginTop: 10 }}
-            icon={<Icon name="check" size={15} color={T.primaryInk} />}
-          >
-            선택 완료
-          </CTAButton>
+          <div style={{ marginTop: 10 }}>
+            <CTAButton
+              variant="soft"
+              onClick={handleNext}
+              icon={<Icon name="check" size={15} color={T.primaryInk} />}
+            >
+              선택 완료
+            </CTAButton>
+          </div>
         )}
       </div>
     </div>

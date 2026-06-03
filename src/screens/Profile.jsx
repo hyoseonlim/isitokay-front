@@ -1,4 +1,14 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+
+function calcAge(birthdate) {
+  if (!birthdate) return null;
+  const today = new Date();
+  const birth = new Date(birthdate);
+  let age = today.getFullYear() - birth.getFullYear();
+  const m = today.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+  return age;
+}
 import T from '../tokens.js';
 import Icon from '../components/Icon.jsx';
 import Card from '../components/Card.jsx';
@@ -127,7 +137,7 @@ export default function Profile() {
                 {localUser.name}
               </h1>
               <p style={{ fontSize: 13, color: T.inkMid, margin: '3px 0 0' }}>
-                만 {localUser.age}세 · {localUser.isPregnant ? `임신 ${localUser.pregnancyWeek}주차` : '비임신'}
+                만 {calcAge(localUser.birthdate) ?? localUser.age}세 · {localUser.isPregnant ? `임신 ${localUser.pregnancyWeek}주차` : '비임신'}
               </p>
             </div>
             {saved && (
@@ -144,7 +154,13 @@ export default function Profile() {
           <SectionTitle>기본 정보</SectionTitle>
           <Card padding={16} style={{ marginBottom: 16 }}>
             <InfoRow label="이름" value={localUser.name} />
-            <InfoRow label="만 나이" value={`${localUser.age}세`} />
+            {localUser.birthdate && (
+              <InfoRow
+                label="생년월일"
+                value={new Date(localUser.birthdate).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' })}
+              />
+            )}
+            <InfoRow label="만 나이" value={`${calcAge(localUser.birthdate) ?? localUser.age}세`} />
             <InfoRow
               label="임신 여부"
               value={localUser.isPregnant ? '임신 중' : '해당 없음'}

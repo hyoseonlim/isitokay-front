@@ -151,9 +151,48 @@ export default function Home() {
     <ScreenLayout activeTab="home" onTabChange={navigateTab}>
       <div style={{ padding: '16px 18px 24px' }}>
         {/* Logo bar */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-          <img src="/images/logo.png" alt="logo" style={{ width: 28, height: 28, borderRadius: 999, objectFit: 'cover' }} />
-          <span style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>해가 될까</span>
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between',
+          marginBottom: 22,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+            <div style={{
+              width: 44, height: 44, borderRadius: 14,
+              overflow: 'hidden', flexShrink: 0,
+              boxShadow: '0 4px 14px rgba(233,169,184,0.5)',
+            }}>
+              <img src="/images/logo.png" alt="해가될까"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </div>
+            <div>
+              <div style={{
+                fontSize: 18, fontWeight: 800, color: T.ink,
+                letterSpacing: -0.6, lineHeight: 1.1,
+              }}>
+                해가 될까
+              </div>
+              <div style={{
+                fontSize: 11, color: T.primaryDeep,
+                fontWeight: 600, marginTop: 3, letterSpacing: 0.1,
+              }}>
+                임산부 AI 안심 파트너
+              </div>
+            </div>
+          </div>
+
+          <button
+            onClick={() => navigateTab('recall')}
+            style={{
+              width: 40, height: 40, borderRadius: 999,
+              background: '#fff', border: `1.5px solid ${T.border}`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', flexShrink: 0,
+              boxShadow: '0 1px 4px rgba(0,0,0,0.07)',
+            }}
+          >
+            <Icon name="bell" size={19} color={T.inkMid} />
+          </button>
         </div>
 
         {/* Greeting */}

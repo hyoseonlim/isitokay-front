@@ -41,7 +41,7 @@ export default function RecallDetail() {
         </button>
       </div>
 
-      <div style={{ padding: '16px 20px 100px' }}>
+      <div style={{ padding: '16px 20px 32px' }}>
         {/* Warning Hero */}
         <Card padding={20} style={{ background: T.redBg, borderColor: T.redLine, marginBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
@@ -128,21 +128,14 @@ export default function RecallDetail() {
           </div>
         </Card>
 
-        <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 24 }}>
+        <div style={{ display: 'flex', gap: 10, alignItems: 'center', marginBottom: 20 }}>
           <div style={{ flex: 1, fontSize: 11, color: T.inkSoft, lineHeight: 1.5 }}>
             출처: 식품의약품안전처(식품안전나라)<br />
             본 정보는 공공데이터를 기반으로 제공됩니다.
           </div>
           <SourceBadge label="식약처 회수정보" />
         </div>
-      </div>
 
-      {/* Action Bar */}
-      <div style={{
-        position: 'fixed', left: 0, right: 0, bottom: 86,
-        padding: '14px 16px 0',
-        background: `linear-gradient(to top, ${T.bgApp} 75%, rgba(251,244,238,0))`,
-      }}>
         <CTAButton variant="primary" onClick={() => navigate('recall')}>
           확인 완료
         </CTAButton>

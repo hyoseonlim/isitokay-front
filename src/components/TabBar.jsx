@@ -11,12 +11,16 @@ const TABS = [
 export default function TabBar({ active, onChange }) {
   return (
     <div style={{
-      position: 'absolute', left: 0, right: 0, bottom: 0,
-      paddingBottom: 28, paddingTop: 8,
-      background: 'rgba(251,244,238,0.96)',
-      backdropFilter: 'blur(10px)',
+      flexShrink: 0,
+      paddingTop: 6,
+      paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 8px)',
+      background: 'rgba(251,244,238,0.97)',
+      backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)',
       borderTop: `1px solid ${T.border}`,
-      display: 'flex', justifyContent: 'space-around', alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'space-around',
+      alignItems: 'center',
     }}>
       {TABS.map(tab => {
         const isActive = tab.id === active;
@@ -26,19 +30,28 @@ export default function TabBar({ active, onChange }) {
             onClick={() => onChange && onChange(tab.id)}
             style={{
               background: 'transparent', border: 'none', cursor: 'pointer',
-              padding: '4px 16px', fontFamily: 'inherit',
+              padding: '6px 20px 4px', fontFamily: 'inherit',
               display: 'flex', flexDirection: 'column',
               alignItems: 'center', justifyContent: 'center', gap: 3,
+              flex: 1, position: 'relative',
             }}
           >
+            {isActive && (
+              <div style={{
+                position: 'absolute',
+                top: 0, left: '50%', transform: 'translateX(-50%)',
+                width: 28, height: 3, borderRadius: '0 0 4px 4px',
+                background: T.primary,
+              }} />
+            )}
             <Icon
               name={tab.icon} size={22}
-              color={isActive ? T.primary : T.inkSoft}
-              strokeWidth={isActive ? 2 : 1.5}
+              color={isActive ? T.primaryDeep : T.inkSoft}
+              strokeWidth={isActive ? 2.2 : 1.5}
             />
             <span style={{
               fontSize: 10, fontWeight: isActive ? 700 : 500,
-              color: isActive ? T.primary : T.inkSoft,
+              color: isActive ? T.primaryDeep : T.inkSoft,
               letterSpacing: -0.2,
             }}>
               {tab.label}

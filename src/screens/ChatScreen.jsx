@@ -170,7 +170,7 @@ function ChatWindow({ conv, onBack, onViewResult }) {
   })[t] || { bg: T.greenBg, line: T.greenLine, ink: T.greenInk };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
       {/* Header */}
       <div style={{
         padding: '12px 16px 10px', flexShrink: 0,
@@ -202,7 +202,7 @@ function ChatWindow({ conv, onBack, onViewResult }) {
       </div>
 
       {/* Messages */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '16px 18px 8px' }}>
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '16px 18px 8px' }}>
         {messages.length === 0 && (
           <div style={{ textAlign: 'center', padding: '40px 20px' }}>
             <div style={{ fontSize: 36, marginBottom: 12 }}>💬</div>
@@ -337,7 +337,9 @@ function ChatWindow({ conv, onBack, onViewResult }) {
 
       {/* Input bar */}
       <div style={{
-        padding: '10px 16px 20px', flexShrink: 0,
+        padding: '10px 16px',
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 14px)',
+        flexShrink: 0,
         background: 'rgba(251,244,238,0.96)', backdropFilter: 'blur(8px)',
         borderTop: `1px solid ${T.border}`,
       }}>
@@ -425,13 +427,11 @@ export default function ChatScreen() {
 
   return (
     <ScreenLayout activeTab="chat" onTabChange={navigateTab} showTabBar={false}>
-      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column' }}>
-        <ChatWindow
-          conv={view === 'chat' ? selectedConv : null}
-          onBack={handleBack}
-          onViewResult={handleViewResult}
-        />
-      </div>
+      <ChatWindow
+        conv={view === 'chat' ? selectedConv : null}
+        onBack={handleBack}
+        onViewResult={handleViewResult}
+      />
     </ScreenLayout>
   );
 }

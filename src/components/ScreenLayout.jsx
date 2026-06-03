@@ -7,16 +7,29 @@ export default function ScreenLayout({
 }) {
   return (
     <div style={{
-      position: 'absolute', inset: 0,
+      flex: 1,
+      minHeight: 0,
+      display: 'flex',
+      flexDirection: 'column',
       background: bg,
-      overflowY: 'auto',
-      overflowX: 'hidden',
-      paddingBottom: showTabBar ? 86 : 0,
       color: T.ink,
     }}>
-      {children}
-      {showTabBar && (
-        <TabBar active={activeTab} onChange={onTabChange} />
+      {showTabBar ? (
+        <>
+          <div style={{
+            flex: 1,
+            minHeight: 0,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }}>
+            {children}
+          </div>
+          <TabBar active={activeTab} onChange={onTabChange} />
+        </>
+      ) : (
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+          {children}
+        </div>
       )}
     </div>
   );

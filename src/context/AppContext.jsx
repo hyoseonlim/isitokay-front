@@ -8,7 +8,7 @@ const AppContext = createContext(null);
 export function AppProvider({ children }) {
   const [isOnboarded, setIsOnboarded] = useState(false);
   const [user, setUser] = useState(mockUser);
-  const [products] = useState(mockProducts);
+  const [products, setProducts] = useState(mockProducts);
   const [conversations, setConversations] = useState(mockConversations);
 
   // Navigation state
